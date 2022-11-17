@@ -1,0 +1,22 @@
+Lingid abiks
+
+ILMSELT KASULIK juhendid https://developer.spotify.com/documentation/android/guides/android-authentication/
+    juhendid 2 https://developer.spotify.com/documentation/general/guides/authorization/app-settings/
+
+Mõned basic käsud https://engineering.atspotify.com/2022/04/spotifys-player-api/
+Main juhend(pealiskaudne) selle lõpus lingid kuidas teha muud https://developer.spotify.com/documentation/android/quick-start/kotlin/
+Spotify Errorid https://github.com/spotify/android-sdk/blob/master/app-remote-lib/ERRORS.md
+
+
+
+
+
+API github https://github.com/spotify/android-sdk/releases
+
+Mingi päris äpp https://developer.spotify.com/community/showcase/musixmatch/
+how to 0-100 projekt https://towardsdatascience.com/using-the-spotify-api-with-your-android-application-the-essentials-1a3c1bc36b9e
+
+
+/libs on aar fail mis ongi "ühendus" spotifyga
+.aar faili projekti saamine https://stackoverflow.com/questions/67724242/how-to-import-aar-module-on-android-studio-4-2
+sha1 genereerimine/vaatamine https://stackoverflow.com/questions/27609442/how-to-get-the-sha-1-fingerprint-certificate-in-android-studio-for-debug-mode
