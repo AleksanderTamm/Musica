@@ -2,4 +2,6 @@
     <string name="app_name">Musica</string>
     <string name="tab_text_1">Local music</string>
     <string name="tab_text_2">Spotify</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
