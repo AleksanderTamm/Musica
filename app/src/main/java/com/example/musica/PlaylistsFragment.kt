@@ -1,0 +1,52 @@
+package com.example.musica
+
+import android.content.Intent
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
+import com.example.musica.databinding.FragmentMainBinding
+import com.example.musica.databinding.FragmentPlaylistsBinding
+import com.example.musica.ui.main.PageViewModel
+
+
+class Playlists : Fragment() {
+
+    private var _binding: FragmentPlaylistsBinding? = null
+
+    // This property is only valid between onCreateView and
+    // onDestroyView.
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        _binding = FragmentPlaylistsBinding.inflate(inflater, container, false)
+        val root = binding.root
+
+        binding.button.setOnClickListener { openMediaPlayer() }
+        binding.floatingActionButton.setOnClickListener {
+            openAddPlaylist()
+        } //should open a new view with all the songs on the phone
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+        super.onViewCreated(view, savedInstanceState)
+        _binding = FragmentPlaylistsBinding.bind(view)
+    }
+
+    private fun openMediaPlayer() {
+        startActivity(Intent(requireContext(), MediaPlayerActivity::class.java))
+    }
+
+    fun openAddPlaylist(){
+        val bundle = Bundle()
+        findNavController().navigate(R.id.action_AddPlaylist, bundle)
+    }
+
+}

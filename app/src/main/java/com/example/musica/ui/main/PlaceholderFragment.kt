@@ -1,25 +1,28 @@
 package com.example.musica.ui.main
 
-import android.content.Intent
+
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+
 import androidx.lifecycle.ViewModelProvider
-import com.example.musica.MediaPlayerActivity
-import com.example.musica.R
+
+import com.example.musica.Playlists
+
 import com.example.musica.databinding.FragmentMainBinding
+import com.example.musica.ui.main.PlaceholderFragment.Companion.ARG_SECTION_NUMBER
+
 
 /**
  * A placeholder fragment containing a simple view.
  */
 class PlaceholderFragment : Fragment() {
 
-    private lateinit var pageViewModel: PageViewModel
     private var _binding: FragmentMainBinding? = null
+    private lateinit var pageViewModel: PageViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -30,26 +33,6 @@ class PlaceholderFragment : Fragment() {
         pageViewModel = ViewModelProvider(this).get(PageViewModel::class.java).apply {
             setIndex(arguments?.getInt(ARG_SECTION_NUMBER) ?: 1)
         }
-    }
-
-    private fun openMediaPlayer() {
-        startActivity(Intent(requireContext(), MediaPlayerActivity::class.java))
-    }
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
-        _binding = FragmentMainBinding.inflate(inflater, container, false)
-        val root = binding.root
-
-        val textView: TextView = binding.sectionLabel
-        pageViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        binding.button.setOnClickListener { openMediaPlayer() }
-        return root
     }
 
     companion object {
@@ -73,8 +56,29 @@ class PlaceholderFragment : Fragment() {
         }
     }
 
+
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        val root = binding.root
+
+        /*
+        val textView: TextView = binding.sectionLabel
+        pageViewModel.text.observe(viewLifecycleOwner, Observer {
+            textView.text = it
+        })
+         */
+
+        return root
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
+
 }
