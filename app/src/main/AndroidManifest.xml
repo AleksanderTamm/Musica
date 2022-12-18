@@ -18,6 +18,9 @@
         android:theme="@style/Theme.Musica"
         tools:targetApi="31">
         <activity
+            android:name="com.example.musica.SpotifyPlayer"
+            android:exported="false" />
+        <activity
             android:name="com.example.musica.MediaPlayerActivity"
             android:exported="false" />
         <activity
