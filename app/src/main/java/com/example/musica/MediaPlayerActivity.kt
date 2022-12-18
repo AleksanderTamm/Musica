@@ -15,13 +15,28 @@ class MediaPlayerActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMediaPlayerBinding
     private var mp: MediaPlayer? = null
     private var currentSong = mutableListOf(R.raw.song_sample)
+    private var index: Int = 0
+    private var songs: MutableList<Int> = mutableListOf()
+    private var newSong: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMediaPlayerBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val intentSongs = intent.getStringExtra("playlist")
+        Log.i("songys", intentSongs + " ")
+        val songsList = intentSongs?.split(' ')
+        songsList?.forEach {
+            Log.i("songys1", it + " ")
+        }
 
-        controlSound(currentSong[0])
+        songsList?.forEach {
+            if (it != "" )
+                songs.add(it.toInt())
+        }
+        controlSound(songs.get(0))
+
+
     }
 
     private fun controlSound(id: Int) {
@@ -31,6 +46,12 @@ class MediaPlayerActivity : AppCompatActivity() {
                 Log.d("MediaPlayer", "ID: ${mp!!.audioSessionId}")
 
                 initialiseSeekBar()
+            }
+            else if(newSong){
+                mp = MediaPlayer.create(this, id)
+                Log.d("MediaPlayer", "ID: ${mp!!.audioSessionId}")
+                initialiseSeekBar()
+                newSong = false
             }
             mp?.start()
             Log.d("MediaPlayer", "Duration: ${mp!!.duration/1000} seconds")
@@ -47,6 +68,7 @@ class MediaPlayerActivity : AppCompatActivity() {
                 mp?.reset()
                 mp?.release()
                 mp = null
+                index = 0
             }
         }
 
@@ -61,6 +83,7 @@ class MediaPlayerActivity : AppCompatActivity() {
             override fun onStopTrackingTouch(p0: SeekBar?) {
             }
         })
+
     }
 
     private fun initialiseSeekBar(){
@@ -71,6 +94,17 @@ class MediaPlayerActivity : AppCompatActivity() {
             override fun run() {
                 try {
                     binding.seekBar.progress = mp!!.currentPosition
+                    val x = mp!!.currentPosition
+                    val y = mp!!.duration
+                    if (mp!!.currentPosition == mp!!.duration){
+                        if(index < songs.size - 1){
+                            val song: Int = songs.get(index+1)
+                            mp = MediaPlayer.create(this@MediaPlayerActivity, song)
+                            binding.seekBar.max = mp!!.duration
+                            mp?.start()
+                            index++
+                        }
+                    }
                     handler.postDelayed(this, 1000)
                 } catch (e: Exception){
                     binding.seekBar.progress = 0
@@ -78,6 +112,4 @@ class MediaPlayerActivity : AppCompatActivity() {
             }
         }, 0)
     }
-
-
 }

@@ -18,5 +18,9 @@
         android:id="@+id/addPlaylistFragment"
         android:name="com.example.musica.AddPlaylistFragment"
         android:label="fragment_add_playlist"
-        tools:layout="@layout/fragment_add_playlist" />
+        tools:layout="@layout/fragment_add_playlist" >
+        <action
+            android:id="@+id/action_backToMain"
+            app:destination="@id/playlistsFragment" />
+    </fragment>
 </navigation>

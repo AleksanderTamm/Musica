@@ -7,13 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import androidx.fragment.app.Fragment
-
 import androidx.lifecycle.ViewModelProvider
-
-import com.example.musica.Playlists
-
 import com.example.musica.databinding.FragmentMainBinding
-import com.example.musica.ui.main.PlaceholderFragment.Companion.ARG_SECTION_NUMBER
 
 
 /**
@@ -24,8 +19,6 @@ class PlaceholderFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private lateinit var pageViewModel: PageViewModel
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -72,7 +65,6 @@ class PlaceholderFragment : Fragment() {
             textView.text = it
         })
          */
-
         return root
     }
 

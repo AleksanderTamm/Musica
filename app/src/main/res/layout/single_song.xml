@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="40dp"
+    android:layout_margin="16dp"
+    card_view:cardBackgroundColor="@color/purple_200"
+    card_view:cardCornerRadius="20dp"
+    card_view:cardElevation="6dp"
+    android:descendantFocusability="blocksDescendants"
+    card_view:contentPadding="4dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <!-- hiljem muudan width, height jne-->
+
+            <TextView
+                android:id="@+id/SongTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:text="Song of Song"
+                android:textColor="@color/white"
+                android:textSize="20sp" />
+
+
+            <!--
+            <TextView
+                android:id="@+id/Artist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/SongTitle"
+                android:layout_marginLeft="20dp"
+                android:layout_toEndOf="@+id/selectSong"
+                android:layout_toRightOf="@+id/selectSong"
+                android:text="Arty McArt"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+                -->
+
+
+        </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>
