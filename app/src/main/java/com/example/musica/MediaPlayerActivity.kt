@@ -7,8 +7,11 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.SeekBar
+import androidx.navigation.findNavController
 import com.example.musica.databinding.ActivityMediaPlayerBinding
 import java.lang.Exception
+import androidx.navigation.fragment.findNavController
+
 
 class MediaPlayerActivity : AppCompatActivity() {
 

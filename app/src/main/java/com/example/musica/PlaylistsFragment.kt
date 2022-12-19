@@ -2,6 +2,8 @@ package com.example.musica
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.musica.databinding.FragmentMainBinding
 import com.example.musica.databinding.FragmentPlaylistsBinding
 import com.example.musica.ui.main.PageViewModel
+import kotlin.concurrent.thread
 
 
 class Playlists : Fragment() {
@@ -48,9 +51,11 @@ class Playlists : Fragment() {
     }
 
     fun startMediaPlayer(playlist: PlaylistEntity){
-        val intent = Intent(requireContext(), MediaPlayerActivity::class.java )
-        intent.putExtra("playlist", playlist.songs)
-        startActivity(intent)
+        thread {
+            val intent = Intent(requireContext(), MediaPlayerActivity::class.java )
+            intent.putExtra("playlist", playlist.songs)
+            startActivity(intent)
+        }
     }
 
     private fun setUpRecyclerView() {

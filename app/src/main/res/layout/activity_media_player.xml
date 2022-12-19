@@ -7,14 +7,6 @@
     tools:context=".MediaPlayerActivity">
 
 
-    <ImageView
-        android:id="@+id/mediaBackButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_margin="20dp"
-        app:srcCompat="@drawable/ic_arrow_back" />
-
     <LinearLayout
         android:id="@+id/wrapper"
         android:layout_width="wrap_content"
