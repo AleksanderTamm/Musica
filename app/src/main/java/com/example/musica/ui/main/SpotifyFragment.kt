@@ -80,7 +80,7 @@ class SpotifyFragment : Fragment() {
 
     private fun setupListeners(context: Context) {
         playButton.setOnClickListener {
-            SpotifyService.connect(context){
+            SpotifyService.connect(context) {
                 SpotifyService.play("spotify:playlist:37i9dQZF1EIYE32WUF6sxN")
                 updateImage()
                 showPauseButton()
@@ -91,78 +91,83 @@ class SpotifyFragment : Fragment() {
 
 
         pauseButton.setOnClickListener {
-            SpotifyService.pause()
-            updateImage()
-            showResumeButton()
-            updateSongname()
+            SpotifyService.connect(context) {
+                SpotifyService.pause()
+                updateImage()
+                showResumeButton()
+                updateSongname()
+            }
         }
 
         resumeButton.setOnClickListener {
-            SpotifyService.connect(context){
-            SpotifyService.resume()
-            updateImage()
-            showPauseButton()
-            updateSongname()}
+            SpotifyService.connect(context) {
+                SpotifyService.resume()
+                updateImage()
+                showPauseButton()
+                updateSongname()
+            }
         }
         nextButton.setOnClickListener {
-            SpotifyService.next()
-            showPauseButton()
+            SpotifyService.connect(context) {
+                SpotifyService.next()
+                showPauseButton()
 
-            updateImage()
-            updateSongname()
-
-
-        }
-
-        //doesnt work
-        SpotifyService.suscribeToChanges {
-            Log.i("sth", "suscribeToChanges")
-
-            SpotifyService.getImage(it.imageUri) {
-                trackImageView.setImageBitmap(it)
-            }
-            updateSongname()
-        }
-
-    }
-
-    private fun showPlayButton() {
-        playButton.visibility = View.VISIBLE
-        pauseButton.visibility = View.GONE
-        resumeButton.visibility = View.GONE
-    }
-
-    private fun updateImage() {
-
-        SpotifyService.getCurrentTrack {
-            SpotifyService.getImage(it.imageUri) {
-                trackImageView.setImageBitmap(it)
+                updateImage()
+                updateSongname()
             }
         }
 
 
+
+    //doesnt work
+    SpotifyService.suscribeToChanges {
+        Log.i("sth", "suscribeToChanges")
+
+        SpotifyService.getImage(it.imageUri) {
+            trackImageView.setImageBitmap(it)
+        }
+        updateSongname()
     }
 
-    private fun updateSongname() {
+}
 
-        SpotifyService.getCurrentTrack {
-            songname.text = it.name + " by " + it.artist.name
+private fun showPlayButton() {
+    playButton.visibility = View.VISIBLE
+    pauseButton.visibility = View.GONE
+    resumeButton.visibility = View.GONE
+}
 
+private fun updateImage() {
+
+    SpotifyService.getCurrentTrack {
+        SpotifyService.getImage(it.imageUri) {
+            trackImageView.setImageBitmap(it)
         }
     }
 
 
-    private fun showPauseButton() {
-        playButton.visibility = View.GONE
-        pauseButton.visibility = View.VISIBLE
-        resumeButton.visibility = View.GONE
-    }
+}
 
-    private fun showResumeButton() {
-        playButton.visibility = View.GONE
-        pauseButton.visibility = View.GONE
-        resumeButton.visibility = View.VISIBLE
+private fun updateSongname() {
+
+    SpotifyService.getCurrentTrack {
+        songname.text = it.name + " by " + it.artist.name
+
     }
+}
+
+
+private fun showPauseButton() {
+    playButton.visibility = View.GONE
+    pauseButton.visibility = View.VISIBLE
+    resumeButton.visibility = View.GONE
+}
+
+private fun showResumeButton() {
+    playButton.visibility = View.GONE
+    pauseButton.visibility = View.GONE
+    resumeButton.visibility = View.VISIBLE
+}
 
 
 }
