@@ -1,5 +1,6 @@
 package com.example.musica.ui.main
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,7 +48,7 @@ class SpotifyFragment : Fragment() {
         nextButton = view.findViewById<ImageButton>(R.id.nextButton)
         songname = view.findViewById<TextView>(R.id.songname)
         setupViews()
-        setupListeners()
+        setupListeners(requireView().context)
 
 
     }
@@ -77,13 +78,15 @@ class SpotifyFragment : Fragment() {
         }
     }
 
-    private fun setupListeners() {
+    private fun setupListeners(context: Context) {
         playButton.setOnClickListener {
+            SpotifyService.connect(context){
+                SpotifyService.play("spotify:playlist:37i9dQZF1EIYE32WUF6sxN")
+                updateImage()
+                showPauseButton()
+                updateSongname()
+            }
 
-            SpotifyService.play("spotify:playlist:37i9dQZF1EIYE32WUF6sxN")
-            updateImage()
-            showPauseButton()
-            updateSongname()
         }
 
 
@@ -95,10 +98,11 @@ class SpotifyFragment : Fragment() {
         }
 
         resumeButton.setOnClickListener {
+            SpotifyService.connect(context){
             SpotifyService.resume()
             updateImage()
             showPauseButton()
-            updateSongname()
+            updateSongname()}
         }
         nextButton.setOnClickListener {
             SpotifyService.next()
