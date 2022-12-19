@@ -8,6 +8,8 @@ import com.spotify.android.appremote.api.Connector
 import com.spotify.android.appremote.api.SpotifyAppRemote
 import com.spotify.protocol.types.ImageUri
 import com.spotify.protocol.types.Track
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 enum class PlayingState {
     PAUSED, PLAYING, STOPPED
@@ -15,7 +17,7 @@ enum class PlayingState {
 
 object SpotifyService {
     private const val CLIENT_ID = "756545fbd8c44cb98826b116cda757ad"
-    private const val  REDIRECT_URI = "com.example.musica://callback"
+    private const val REDIRECT_URI = "com.example.musica://callback"
 
     private var mSpotifyAppRemote: SpotifyAppRemote? = null
     private var connectionParams: ConnectionParams = ConnectionParams.Builder(CLIENT_ID)
@@ -59,6 +61,7 @@ object SpotifyService {
     fun pause() {
         mSpotifyAppRemote?.playerApi?.pause()
     }
+
     fun next() {
         mSpotifyAppRemote?.playerApi?.skipNext()
     }
@@ -69,7 +72,7 @@ object SpotifyService {
         }
     }
 
-    fun getImage(imageUri: ImageUri, handler: (Bitmap) -> Unit)  {
+    fun getImage(imageUri: ImageUri, handler: (Bitmap) -> Unit) {
         mSpotifyAppRemote?.imagesApi?.getImage(imageUri)?.setResultCallback {
             handler(it)
         }
@@ -81,11 +84,12 @@ object SpotifyService {
         }
     }
 
-    fun getCurrentTrackImage(handler: (Bitmap) -> Unit)  {
-        getCurrentTrack {
-            Log.i("sth", "track"+it.name)
-            getImage(it.imageUri) {
-                handler(it)
+    suspend fun getCurrentTrackImage(handler: (Bitmap) -> Unit) {
+        return withContext(Dispatchers.IO) {
+            getCurrentTrack {
+                getImage(it.imageUri) {
+                    handler(it)
+                }
             }
         }
     }

@@ -12,6 +12,9 @@ import androidx.fragment.app.Fragment
 import com.example.musica.PlayingState
 import com.example.musica.R
 import com.example.musica.SpotifyService
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class SpotifyFragment : Fragment() {
@@ -21,21 +24,7 @@ class SpotifyFragment : Fragment() {
     lateinit var nextButton: ImageButton
     lateinit var trackImageView: ImageView
     lateinit var songname: TextView
-
-
-    //spotify
-    /*  private val clientId = "756545fbd8c44cb98826b116cda757ad"
-      private val redirectUri = "com.example.musica://callback"
-      private var spotifyAppRemote: SpotifyAppRemote? = null
-  */
-
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.i("Spotify", "created")
-
-
-    }
+    val scope = CoroutineScope(Dispatchers.Default)
 
 
     override fun onCreateView(
@@ -44,7 +33,6 @@ class SpotifyFragment : Fragment() {
 
     ): View? {
         // Inflate the layout for this fragment
-
         return inflater.inflate(R.layout.fragment_spotify, container, false)
     }
 
@@ -65,29 +53,18 @@ class SpotifyFragment : Fragment() {
     }
 
 
-    override fun onPause() {
-        Log.i("Spotify", "paused")
-        super.onPause()
-    }
-
-    override fun onResume() {
-        Log.i("Spotify", "resumed")
-        super.onResume()
-    }
-
-
-
-
     override fun onStop() {
         super.onStop()
         SpotifyService.disconnect()
     }
 
     private fun setupViews() {
-
-        SpotifyService.getCurrentTrackImage {
-            trackImageView.setImageBitmap(it)
+        scope.launch {
+            SpotifyService.getCurrentTrackImage {
+                trackImageView.setImageBitmap(it)
+            }
         }
+
 
 
 
@@ -104,7 +81,6 @@ class SpotifyFragment : Fragment() {
         playButton.setOnClickListener {
 
             SpotifyService.play("spotify:playlist:37i9dQZF1EIYE32WUF6sxN")
-
             updateImage()
             showPauseButton()
             updateSongname()
@@ -134,14 +110,16 @@ class SpotifyFragment : Fragment() {
 
         }
 
+        //doesnt work
         SpotifyService.suscribeToChanges {
             Log.i("sth", "suscribeToChanges")
+
             SpotifyService.getImage(it.imageUri) {
                 trackImageView.setImageBitmap(it)
             }
-
-
+            updateSongname()
         }
+
     }
 
     private fun showPlayButton() {
@@ -151,16 +129,20 @@ class SpotifyFragment : Fragment() {
     }
 
     private fun updateImage() {
+
         SpotifyService.getCurrentTrack {
             SpotifyService.getImage(it.imageUri) {
                 trackImageView.setImageBitmap(it)
             }
         }
+
+
     }
 
     private fun updateSongname() {
+
         SpotifyService.getCurrentTrack {
-                songname.text= it.name+" by "+it.artist.name
+            songname.text = it.name + " by " + it.artist.name
 
         }
     }
